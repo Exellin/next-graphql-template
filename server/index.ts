@@ -9,7 +9,8 @@ import dbSetup from './db/db-setup';
 import mutation from "./mutation"
 import query from "./query";
 import schema from './schema';
-import { getTokenPayload } from "./auth";
+import { setContextPayload } from "./auth";
+import Context from "Context";
 
 const main = async () => {
   dbSetup();
@@ -36,12 +37,16 @@ const main = async () => {
   })
 
   app.register(mercuriusAuth, {
-    async applyPolicy (_authDirectiveAST, _parent, _args, context, _info) {
-      getTokenPayload(context)
+    async applyPolicy (_authDirectiveAST, _parent, _args, context: Context, _info) {
+      if (!context.payload?.userId) {
+        throw new Error('Not Authenticated')
+      }
       return true
     },
     authDirective: 'auth'
   })
+
+  app.graphql.addHook('preExecution', setContextPayload)
 
   const port = process.env.PORT || 4000;
   app.listen(port, '0.0.0.0', () => console.log(`server started on http://localhost:${port}/playground`));

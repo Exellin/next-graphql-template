@@ -3,27 +3,25 @@ import { sign, verify } from "jsonwebtoken";
 import Context from "Context";
 
 const createAccessToken = (user: User) => {
-  return sign({ userId: user.id }, process.env.ACCESS_TOKEN_SECRET!, {expiresIn: '15m'},)
+  return sign({ userId: user.id }, process.env.ACCESS_TOKEN_SECRET!, {expiresIn: process.env.ACCESS_TOKEN_EXPIRY || '15m'},)
 };
 
 const createRefreshToken = (user: User) => {
   return sign({ userId: user.id }, process.env.REFRESH_TOKEN_SECRET!, {expiresIn: '7d' })
 };
 
-const getTokenPayload = (context: Context) => {
+const setContextPayload = async (_schema: unknown, _document: unknown, context: Context) => {
   const authHeader = context.reply.request.headers.authorization;
+  let payload;
 
-  if (!authHeader) {
-    throw new Error("Authorization header not found");
+  if (authHeader) {
+    try {
+      const token = authHeader.split(" ")[1];
+      payload = verify(token, process.env.ACCESS_TOKEN_SECRET!);
+    } catch {}
   }
 
-  try {
-    const token = authHeader.split(" ")[1];
-    const payload = verify(token, process.env.ACCESS_TOKEN_SECRET!);
-    return payload
-  } catch (err) {
-    throw new Error("Not authenticated");
-  }
+  context.payload = payload as any;
 }
 
-export { createAccessToken, createRefreshToken, getTokenPayload }
+export { createAccessToken, createRefreshToken, setContextPayload }
