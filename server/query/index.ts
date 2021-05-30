@@ -1,12 +1,3 @@
-import { GraphQLObjectType } from "graphql";
-import { userQueryField, usersQueryField } from "./userQueries";
+import { user, users } from "./userQueries"
 
-const query = new GraphQLObjectType({
-  name: "Query",
-  fields: {
-    user: userQueryField,
-    users: usersQueryField
-  },
-});
-
-export default query;
+export default { user, users }

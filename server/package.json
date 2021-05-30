@@ -29,6 +29,7 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.19",
     "mercurius": "^7.6.1",
+    "mercurius-auth": "^1.1.0",
     "mysql2": "^2.2.5",
     "objection": "^2.2.15"
   },
