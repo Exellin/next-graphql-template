@@ -1,10 +1,11 @@
 import { GraphQLObjectType } from "graphql";
-import { register } from "./userMutations";
+import { register, login } from "./userMutations";
 
 const mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
-    register
+    register,
+    login
   }
 });
 
