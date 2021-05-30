@@ -3,6 +3,7 @@ import mercurius from 'mercurius';
 import Fastify from "fastify";
 import cookie from 'fastify-cookie'
 import mercuriusAuth from 'mercurius-auth';
+import AltairFastify from 'altair-fastify-plugin';
 
 import dbSetup from './db/db-setup';
 import mutation from "./mutation"
@@ -26,11 +27,13 @@ const main = async () => {
 
   await app.register(mercurius, {
     schema,
-    resolvers,
-    graphiql: 'playground'
+    resolvers
   })
 
   app.register(cookie)
+  app.register(AltairFastify, {
+    path: '/playground'
+  })
 
   app.register(mercuriusAuth, {
     async applyPolicy (_authDirectiveAST, _parent, _args, context, _info) {

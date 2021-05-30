@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Exellin/next-graphql-template#readme",
   "dependencies": {
+    "altair-fastify-plugin": "^4.0.4",
     "bcryptjs": "^2.4.3",
     "dotenv": "^10.0.0",
     "fastify": "^3.17.0",
