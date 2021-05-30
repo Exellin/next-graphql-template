@@ -1,3 +1,3 @@
-import { user, users } from "./userQueries"
+import { user, users } from './userQueries';
 
-export default { user, users }
+export default { user, users };

@@ -1,55 +1,56 @@
-import "dotenv/config";
+import 'dotenv/config';
 import mercurius from 'mercurius';
-import Fastify from "fastify";
-import cookie from 'fastify-cookie'
+import Fastify from 'fastify';
+import cookie from 'fastify-cookie';
 import mercuriusAuth from 'mercurius-auth';
 import AltairFastify from 'altair-fastify-plugin';
 
+import Context from './Context';
 import dbSetup from './db/db-setup';
-import mutation from "./mutation"
-import query from "./query";
+import mutation from './mutation';
+import query from './query';
 import schema from './schema';
-import { setContextPayload } from "./auth";
-import Context from "Context";
+import { setContextPayload } from './auth';
 
 const main = async () => {
   dbSetup();
 
   const resolvers = {
     Mutation: {
-      ...mutation
+      ...mutation,
     },
     Query: {
-      ...query
-    }
-  }
+      ...query,
+    },
+  };
 
-  const app = Fastify()
+  const app = Fastify();
 
   await app.register(mercurius, {
     schema,
-    resolvers
-  })
+    resolvers,
+  });
 
-  app.register(cookie)
+  app.register(cookie);
   app.register(AltairFastify, {
-    path: '/playground'
-  })
+    path: '/playground',
+  });
 
   app.register(mercuriusAuth, {
-    async applyPolicy (_authDirectiveAST, _parent, _args, context: Context, _info) {
+    async applyPolicy(_authDirectiveAST, _parent, _args, context: Context) {
       if (!context.payload?.userId) {
-        throw new Error('Not Authenticated')
+        throw new Error('Not Authenticated');
       }
-      return true
+      return true;
     },
-    authDirective: 'auth'
-  })
+    authDirective: 'auth',
+  });
 
-  app.graphql.addHook('preExecution', setContextPayload)
+  app.graphql.addHook('preExecution', setContextPayload);
 
   const port = process.env.PORT || 4000;
+  // eslint-disable-next-line no-console
   app.listen(port, '0.0.0.0', () => console.log(`server started on http://localhost:${port}/playground`));
-}
+};
 
 main();
