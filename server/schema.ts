@@ -27,4 +27,4 @@ export default `#graphql
   type LoginResponse {
     accessToken: String!
   }
-`
+`;
