@@ -5,7 +5,7 @@ import User from './models/User';
 
 const createAccessToken = (user: User) => sign({ userId: user.id }, process.env.ACCESS_TOKEN_SECRET!, { expiresIn: process.env.ACCESS_TOKEN_EXPIRY || '15m' });
 
-const createRefreshToken = (user: User) => sign({ userId: user.id }, process.env.REFRESH_TOKEN_SECRET!, { expiresIn: '7d' });
+const createRefreshToken = (user: User) => sign({ userId: user.id, tokenVersion: user.refreshTokenVersion }, process.env.REFRESH_TOKEN_SECRET!, { expiresIn: '7d' });
 
 const setContextPayload = async (_schema: unknown, _document: unknown, context: Context) => {
   const authHeader = context.reply.request.headers.authorization;

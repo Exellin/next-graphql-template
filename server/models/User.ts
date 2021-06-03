@@ -8,6 +8,7 @@ class User extends Model {
   static tableName = 'user';
 
   password!: string;
+  refreshTokenVersion!: number;
 
   name(): string {
     return `${this.firstName} ${this.lastName}`;

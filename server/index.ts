@@ -71,6 +71,10 @@ const main = async () => {
       reply.send({ ok: false, accessToken: '' });
     }
 
+    if (user.refreshTokenVersion !== payload.tokenVersion) {
+      reply.send({ ok: false, accessToken: '' });
+    }
+
     reply.setCookie('jid', createRefreshToken(user), { httpOnly: true });
     reply.send({ ok: true, accessToken: createAccessToken(user) });
   });

@@ -7,6 +7,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string('lastName');
     table.string('email').unique();
     table.string('password');
+    table.integer('refreshTokenVersion').defaultTo(0);
   });
 }
 
