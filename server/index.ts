@@ -5,12 +5,14 @@ import cookie from 'fastify-cookie';
 import mercuriusAuth from 'mercurius-auth';
 import AltairFastify from 'altair-fastify-plugin';
 
+import { verify } from 'jsonwebtoken';
+import User from './models/User';
 import Context from './Context';
 import dbSetup from './db/db-setup';
 import mutation from './mutation';
 import query from './query';
 import schema from './schema';
-import { setContextPayload } from './auth';
+import { createAccessToken, createRefreshToken, setContextPayload } from './auth';
 
 const main = async () => {
   dbSetup();
@@ -47,6 +49,31 @@ const main = async () => {
   });
 
   app.graphql.addHook('preExecution', setContextPayload);
+
+  app.post('/refresh_token', {}, async (request, reply) => {
+    const token = request.cookies.jid;
+
+    if (!token) {
+      reply.send({ ok: false, accessToken: '' });
+    }
+
+    let payload: any;
+
+    try {
+      payload = verify(token, process.env.REFRESH_TOKEN_SECRET!);
+    } catch {
+      reply.send({ ok: false, accessToken: '' });
+    }
+
+    const user = await User.query().findById(payload.userId);
+
+    if (!user) {
+      reply.send({ ok: false, accessToken: '' });
+    }
+
+    reply.setCookie('jid', createRefreshToken(user), { httpOnly: true });
+    reply.send({ ok: true, accessToken: createAccessToken(user) });
+  });
 
   const port = process.env.PORT || 4000;
   // eslint-disable-next-line no-console
