@@ -6,3 +6,5 @@ generates:
     plugins:
       - "typescript"
       - "typescript-resolvers"
+  ../client/generated/schema.graphql:
+    - print-schema.ts
