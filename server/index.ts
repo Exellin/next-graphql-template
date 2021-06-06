@@ -4,6 +4,7 @@ import Fastify from 'fastify';
 import cookie from 'fastify-cookie';
 import mercuriusAuth from 'mercurius-auth';
 import AltairFastify from 'altair-fastify-plugin';
+import fastifyCors from 'fastify-cors';
 
 import { verify } from 'jsonwebtoken';
 import User from './models/User';
@@ -34,8 +35,19 @@ const main = async () => {
   });
 
   app.register(cookie);
+
   app.register(AltairFastify, {
     path: '/playground',
+  });
+
+  app.register(fastifyCors, {
+    origin: (origin, cb) => {
+      if (/localhost/.test(origin)) {
+        cb(null, true);
+        return;
+      }
+      throw new Error('Not allowed');
+    },
   });
 
   app.register(mercuriusAuth, {
