@@ -10,21 +10,23 @@ const usersQuery = `#graphql
       name
     }
   }
-`
+`;
 
-export default function Home() {
+const Index = () => {
   const [result] = useQuery({
-    query: usersQuery
+    query: usersQuery,
   });
 
-  const {data, loading, error} = result;
+  const { data, fetching, error } = result;
 
-  if (loading) return 'Loading';
+  if (fetching) return 'Loading';
   if (error) return 'Error';
 
   return (
     <div>
       <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
-  )
-}
+  );
+};
+
+export default Index;
