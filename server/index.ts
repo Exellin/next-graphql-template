@@ -41,11 +41,12 @@ const main = async () => {
   });
 
   app.register(fastifyCors, {
-    origin: (origin, cb) => {
-      if (/localhost/.test(origin)) {
+    origin: (_origin, cb) => {
+      if (process.env.NODE_ENV === 'development') {
         cb(null, true);
         return;
       }
+
       throw new Error('Not allowed');
     },
   });

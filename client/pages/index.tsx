@@ -1,21 +1,7 @@
-import { useQuery } from 'urql';
-
-const usersQuery = `#graphql
-  query getUsers {
-    users{
-      id
-      firstName
-      lastName
-      email
-      name
-    }
-  }
-`;
+import { useGetUsersQuery } from '../generated/graphql';
 
 const Index = () => {
-  const [result] = useQuery({
-    query: usersQuery,
-  });
+  const [result] = useGetUsersQuery();
 
   const { data, fetching, error } = result;
 

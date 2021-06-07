@@ -26,6 +26,6 @@
     "baseUrl": ".",
     "rootDir": "."
   },
-  "exclude": ["node_modules", "print-schema.ts"],
+  "exclude": ["node_modules"],
   "include": ["**/*.ts"]
 }
