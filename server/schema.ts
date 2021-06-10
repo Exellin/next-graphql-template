@@ -14,14 +14,21 @@ export default `#graphql
     name: String!
   }
 
+  input CreateUserInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
+  }
+
+  input LoginInput {
+    email: String!
+    password: String!
+  }
+
   type Mutation {
-    register(
-      firstName: String!
-      lastName: String!
-      email: String!
-      password: String!
-    ): User
-    login(email: String!, password: String!): LoginResponse
+    createUser(input: CreateUserInput!): User
+    login(input: LoginInput!): LoginResponse
   }
 
   type LoginResponse {

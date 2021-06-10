@@ -17,7 +17,8 @@
   ],
   "rules": {
     "@typescript-eslint/lines-between-class-members": "off",
-    "no-empty": ["error", { "allowEmptyCatch": true }]
+    "no-empty": ["error", { "allowEmptyCatch": true }],
+    "max-len": ["error", { "code": 120 }]
   },
   "settings": {
     "import/resolver": {

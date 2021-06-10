@@ -1,3 +1,3 @@
-import { register, login } from './userMutations';
+import { createUser, login } from './userMutations';
 
-export default { register, login };
+export default { createUser, login };

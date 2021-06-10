@@ -1,14 +1,14 @@
 import { hash, compare } from 'bcryptjs';
 import Context from 'Context';
 
-import { LoginResponse, MutationLoginArgs, MutationRegisterArgs } from 'generated/graphql';
+import { LoginResponse, MutationLoginArgs, MutationCreateUserArgs } from 'generated/graphql';
 import User from '../models/User';
 import { createAccessToken, createRefreshToken } from '../auth';
 
-const register = async (_: unknown, args: MutationRegisterArgs): Promise<User> => {
+const createUser = async (_: unknown, { input }: MutationCreateUserArgs): Promise<User> => {
   const {
     firstName, lastName, email, password,
-  } = args;
+  } = input;
   let hashedPassword;
 
   if (password) {
@@ -25,8 +25,8 @@ const register = async (_: unknown, args: MutationRegisterArgs): Promise<User> =
   return user;
 };
 
-const login = async (_: unknown, args: MutationLoginArgs, ctx: Context): Promise<LoginResponse> => {
-  const { email, password } = args;
+const login = async (_: unknown, { input }: MutationLoginArgs, ctx: Context): Promise<LoginResponse> => {
+  const { email, password } = input;
   const user = await User.query().findOne({ email });
 
   if (!user || !password) {
@@ -46,4 +46,4 @@ const login = async (_: unknown, args: MutationLoginArgs, ctx: Context): Promise
   };
 };
 
-export { register, login };
+export { createUser, login };
