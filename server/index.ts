@@ -49,6 +49,7 @@ const main = async () => {
 
       throw new Error('Not allowed');
     },
+    credentials: true,
   });
 
   app.register(mercuriusAuth, {

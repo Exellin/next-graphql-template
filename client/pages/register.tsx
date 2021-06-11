@@ -5,7 +5,7 @@ import { useCreateUserMutation } from '../generated/graphql';
 
 interface Props {}
 
-const register: FC<Props> = () => {
+const Register: FC<Props> = () => {
   const [email, setEmail] = useState('');
   const [firstName, setfirstName] = useState('');
   const [lastName, setlastName] = useState('');
@@ -38,4 +38,4 @@ const register: FC<Props> = () => {
   );
 };
 
-export default register;
+export default Register;

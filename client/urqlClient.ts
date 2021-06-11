@@ -7,6 +7,7 @@ const ssrCache = ssrExchange({ isClient: !isServerSide });
 const client = createClient({
   url: 'http://localhost:4000/graphql',
   exchanges: [dedupExchange, cacheExchange, ssrCache, fetchExchange],
+  fetchOptions: { credentials: 'include' },
 });
 
 export { client, ssrCache };

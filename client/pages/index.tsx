@@ -3,7 +3,7 @@ import { useGetUsersQuery } from '../generated/graphql';
 
 interface Props {}
 
-const index: FC<Props> = () => {
+const Index: FC<Props> = () => {
   const [result] = useGetUsersQuery();
 
   const { data, fetching, error } = result;
@@ -18,4 +18,4 @@ const index: FC<Props> = () => {
   );
 };
 
-export default index;
+export default Index;
