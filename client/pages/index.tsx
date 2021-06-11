@@ -1,12 +1,15 @@
+import { FC } from 'react';
 import { useGetUsersQuery } from '../generated/graphql';
 
-const Index = () => {
+interface Props {}
+
+const index: FC<Props> = () => {
   const [result] = useGetUsersQuery();
 
   const { data, fetching, error } = result;
 
-  if (fetching) return 'Loading';
-  if (error) return 'Error';
+  if (fetching) return <div>Loading</div>;
+  if (error) return <div>Error</div>;
 
   return (
     <div>
@@ -15,4 +18,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default index;

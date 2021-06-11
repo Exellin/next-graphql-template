@@ -15,6 +15,18 @@ export type Scalars = {
 };
 
 
+export type CreateUserInput = {
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type LoginInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
 export type LoginResponse = {
   __typename?: 'LoginResponse';
   accessToken: Scalars['String'];
@@ -22,22 +34,18 @@ export type LoginResponse = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  register?: Maybe<User>;
+  createUser?: Maybe<User>;
   login?: Maybe<LoginResponse>;
 };
 
 
-export type MutationRegisterArgs = {
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
-  email: Scalars['String'];
-  password: Scalars['String'];
+export type MutationCreateUserArgs = {
+  input: CreateUserInput;
 };
 
 
 export type MutationLoginArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  input: LoginInput;
 };
 
 export type Query = {
@@ -60,6 +68,19 @@ export type User = {
   name: Scalars['String'];
 };
 
+export type CreateUserMutationVariables = Exact<{
+  input: CreateUserInput;
+}>;
+
+
+export type CreateUserMutation = (
+  { __typename?: 'Mutation' }
+  & { createUser?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'firstName' | 'lastName' | 'email'>
+  )> }
+);
+
 export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -72,6 +93,20 @@ export type GetUsersQuery = (
 );
 
 
+export const CreateUserDocument = gql`
+    mutation createUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    id
+    firstName
+    lastName
+    email
+  }
+}
+    `;
+
+export function useCreateUserMutation() {
+  return Urql.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument);
+};
 export const GetUsersDocument = gql`
     query getUsers {
   users {
