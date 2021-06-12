@@ -1,7 +1,10 @@
-import { FC, useEffect, useState } from 'react';
+import {
+  FC, useEffect, useState, useContext,
+} from 'react';
 import { useRouter } from 'next/router';
 
 import { useLoginMutation } from '../generated/graphql';
+import TokenContext from '../TokenContext';
 
 interface Props {}
 
@@ -10,9 +13,11 @@ const Login: FC<Props> = () => {
   const [password, setPassword] = useState('');
   const [loginResult, login] = useLoginMutation();
   const router = useRouter();
+  const { setToken } = useContext(TokenContext) as any;
 
   useEffect(() => {
-    if (loginResult.data && !loginResult.error) {
+    if (loginResult.data?.login) {
+      setToken(loginResult.data.login.accessToken);
       router.push('/');
     }
   }, [loginResult]);

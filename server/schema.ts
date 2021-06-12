@@ -2,8 +2,8 @@ export default `#graphql
   directive @auth on OBJECT | FIELD_DEFINITION
 
   type Query {
-    user(id: Int!): User
-    users: [User!]!
+    user(id: Int!): User @auth
+    users: [User!]! @auth
   }
 
   type User {
