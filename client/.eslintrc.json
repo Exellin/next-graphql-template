@@ -23,7 +23,8 @@
   "rules": {
     "react/jsx-props-no-spreading": [0, {}],
     "semi": [2, "always"],
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "no-console": ["error", { "allow": ["error"] }]
   },
   "ignorePatterns": ["generated"]
 }

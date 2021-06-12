@@ -1,6 +1,7 @@
 import {
   ComponentType, FC, useEffect, useState,
 } from 'react';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
 
 import '../styles/globals.css';
 import Header from '../components/Header';
@@ -15,15 +16,37 @@ const App: FC<Props> = ({ Component, pageProps }: Props) => {
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const refreshToken = () => {
+    const scheduleNextRefresh = (accessToken: string) => {
+      try {
+        const { exp } = jwtDecode<JwtPayload>(accessToken);
+
+        if (exp) {
+          const expiresIn = exp * 1000 - Date.now();
+          setTimeout(refreshToken, expiresIn - 500);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
     fetch('http://localhost:4000/refresh_token', {
       method: 'POST',
       credentials: 'include',
     }).then(async (response) => {
       const { accessToken } = await response.json();
-      setToken(accessToken);
+
+      if (accessToken) {
+        setToken(accessToken);
+        scheduleNextRefresh(accessToken);
+      }
+
       setLoading(false);
     });
+  };
+
+  useEffect(() => {
+    refreshToken();
   }, []);
 
   const state = {
