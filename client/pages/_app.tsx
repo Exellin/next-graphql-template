@@ -12,6 +12,8 @@ interface Props {
   Component: ComponentType, pageProps: any
 }
 
+const MAX_TIMEOUT = 2147483647; // 2^31  - 1, larger and setTimeout fires immediately
+
 const App: FC<Props> = ({ Component, pageProps }: Props) => {
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(true);
@@ -23,7 +25,11 @@ const App: FC<Props> = ({ Component, pageProps }: Props) => {
 
         if (exp) {
           const expiresIn = exp * 1000 - Date.now();
-          setTimeout(refreshToken, expiresIn - 500);
+          if (expiresIn > MAX_TIMEOUT) {
+            setTimeout(refreshToken, MAX_TIMEOUT);
+          } else {
+            setTimeout(refreshToken, expiresIn - 500);
+          }
         }
       } catch (err) {
         console.error(err);
