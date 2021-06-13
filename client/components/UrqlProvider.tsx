@@ -9,7 +9,7 @@ import {
 import TokenContext from '../TokenContext';
 
 interface Props {
-  children: ReactChild
+  children: ReactChild | ReactChild[]
 }
 
 const UrqlProvider: FC<Props> = ({ children }: Props) => {

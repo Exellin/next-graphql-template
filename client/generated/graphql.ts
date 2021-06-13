@@ -52,6 +52,7 @@ export type Query = {
   __typename?: 'Query';
   user?: Maybe<User>;
   users: Array<User>;
+  me?: Maybe<User>;
 };
 
 
@@ -105,6 +106,17 @@ export type LoginMutation = (
   )> }
 );
 
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'email'>
+  )> }
+);
+
 
 export const CreateUserDocument = gql`
     mutation createUser($input: CreateUserInput!) {
@@ -143,4 +155,17 @@ export const LoginDocument = gql`
 
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
+};
+export const MeDocument = gql`
+    query me {
+  me {
+    id
+    name
+    email
+  }
+}
+    `;
+
+export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
 };

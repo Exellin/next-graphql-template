@@ -1,3 +1,4 @@
+import Context from 'Context';
 import { QueryUserArgs } from 'generated/graphql';
 import User from '../models/User';
 
@@ -6,4 +7,7 @@ Promise<User | undefined> => User.query().findById(id!);
 
 const users = async (): Promise<User[]> => User.query();
 
-export { user, users };
+const me = async (_: unknown, _params: any, { payload }: Context):
+Promise<User | undefined> => (payload?.userId ? User.query().findById(payload.userId) : undefined);
+
+export { user, users, me };

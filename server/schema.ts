@@ -4,6 +4,7 @@ export default `#graphql
   type Query {
     user(id: Int!): User @auth
     users: [User!]! @auth
+    me: User
   }
 
   type User {

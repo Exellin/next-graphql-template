@@ -59,8 +59,8 @@ const App: FC<Props> = ({ Component, pageProps }: Props) => {
 
   return (
     <TokenContext.Provider value={state}>
-      <Header />
       <UrqlProvider>
+        <Header />
         <Component {...pageProps} />
       </UrqlProvider>
     </TokenContext.Provider>
