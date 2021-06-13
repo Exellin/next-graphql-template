@@ -46,4 +46,10 @@ const login = async (_: unknown, { input }: MutationLoginArgs, ctx: Context): Pr
   };
 };
 
-export { createUser, login };
+const logout = (_: unknown, _args: any, ctx: Context): boolean => {
+  ctx.reply.clearCookie('jid');
+
+  return true;
+};
+
+export { createUser, login, logout };

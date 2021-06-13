@@ -30,6 +30,7 @@ export default `#graphql
   type Mutation {
     createUser(input: CreateUserInput!): User
     login(input: LoginInput!): LoginResponse
+    logout: Boolean!
   }
 
   type LoginResponse {

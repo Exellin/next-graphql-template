@@ -1,11 +1,14 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import Link from 'next/link';
-import { useMeQuery } from '../generated/graphql';
+import { useLogoutMutation, useMeQuery } from '../generated/graphql';
+import TokenContext from '../TokenContext';
 
 interface Props {}
 
 const Header: FC<Props> = () => {
   const [result] = useMeQuery();
+  const [, logout] = useLogoutMutation();
+  const { setToken } = useContext(TokenContext) as any;
 
   const { data, fetching } = result;
   let body: any = null;
@@ -13,7 +16,20 @@ const Header: FC<Props> = () => {
   if (fetching) {
     body = null;
   } else if (data?.me) {
-    body = <div>{data.me.name}</div>;
+    body = (
+      <div>
+        {data.me.name}
+        <button
+          type="button"
+          onClick={() => {
+            logout();
+            setToken(null);
+          }}
+        >
+          logout
+        </button>
+      </div>
+    );
   } else {
     body = (
       <div>
