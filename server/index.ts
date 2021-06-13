@@ -13,7 +13,7 @@ import dbSetup from './db/db-setup';
 import mutation from './mutation';
 import query from './query';
 import schema from './schema';
-import { createAccessToken, createRefreshToken, setContextPayload } from './auth';
+import { createAccessToken, setContextPayload } from './auth';
 
 const main = async () => {
   dbSetup();
@@ -89,7 +89,6 @@ const main = async () => {
       reply.send({ ok: false, accessToken: '' });
     }
 
-    reply.setCookie('jid', createRefreshToken(user), { httpOnly: true });
     reply.send({ ok: true, accessToken: createAccessToken(user) });
   });
 

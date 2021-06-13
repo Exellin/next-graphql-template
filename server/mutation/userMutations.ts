@@ -3,7 +3,7 @@ import Context from 'Context';
 
 import { LoginResponse, MutationLoginArgs, MutationCreateUserArgs } from 'generated/graphql';
 import User from '../models/User';
-import { createAccessToken, createRefreshToken } from '../auth';
+import { createAccessToken, createRefreshToken, refreshTokenExpiresInDays } from '../auth';
 
 const createUser = async (_: unknown, { input }: MutationCreateUserArgs): Promise<User> => {
   const {
@@ -39,7 +39,12 @@ const login = async (_: unknown, { input }: MutationLoginArgs, ctx: Context): Pr
     throw new Error('invalid credentials');
   }
 
-  ctx.reply.setCookie('jid', createRefreshToken(user), { httpOnly: true });
+  ctx.reply.setCookie('jid', createRefreshToken(user),
+    {
+      httpOnly: true,
+      path: '/refresh_token',
+      expires: new Date(new Date().setDate(new Date().getDate() + refreshTokenExpiresInDays)),
+    });
 
   return {
     accessToken: createAccessToken(user),
