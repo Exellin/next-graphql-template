@@ -26,5 +26,5 @@
     "react/react-in-jsx-scope": "off",
     "no-console": ["error", { "allow": ["error"] }]
   },
-  "ignorePatterns": ["generated"]
+  "ignorePatterns": ["generated", "jest.config.js"]
 }

@@ -32,8 +32,8 @@ const Login: FC<Props> = () => {
       });
     }}
     >
-      <input value={email} type="email" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
-      <input value={password} type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
+      <input value={email} name="email" type="email" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
+      <input value={password} name="password" type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
       <button type="submit">login</button>
     </form>
   );
