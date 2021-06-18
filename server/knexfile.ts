@@ -15,6 +15,9 @@ export default {
       directory: 'db/migrations',
     },
     debug: true,
+    seeds: {
+      directory: 'db/seeds',
+    },
     ...knexSnakeCaseMappers,
   },
   production: {

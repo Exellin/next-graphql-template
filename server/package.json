@@ -8,6 +8,7 @@
     "create-migration": "knex migrate:make $npm_config_name",
     "migrate": "env $(cat .env) knex migrate:latest",
     "rollback": "env $(cat .env) knex migrate:rollback",
+    "seed": "env $(cat .env) knex seed:run",
     "test": "jest",
     "codegen": "graphql-codegen --config codegen.yml"
   },
