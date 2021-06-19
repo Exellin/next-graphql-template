@@ -1,11 +1,8 @@
-import knex from 'knex';
 import { Model } from 'objection';
-
-import knexfile from '../knexfile';
+import knex from './knex';
 
 const dbSetup = () => {
-  const db = knex(knexfile.development);
-  Model.knex(db);
+  Model.knex(knex);
 };
 
 export default dbSetup;

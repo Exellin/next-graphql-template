@@ -21,7 +21,9 @@ describe('me query', () => {
       method: 'POST',
       url: '/graphql',
       headers: { 'Content-Type': 'application/json' },
-      payload: JSON.stringify({ query }),
+      payload: {
+        query,
+      },
     });
 
     expect(response.json()).toStrictEqual(expectedMe);

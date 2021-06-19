@@ -10,7 +10,8 @@
     "rollback": "env $(cat .env) knex migrate:rollback",
     "seed": "env $(cat .env) knex seed:run",
     "test": "jest",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config codegen.yml",
+    "migrate-test": "env $(cat test.env) knex migrate:latest"
   },
   "repository": {
     "type": "git",

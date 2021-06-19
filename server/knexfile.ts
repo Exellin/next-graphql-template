@@ -1,6 +1,12 @@
 import { knexSnakeCaseMappers } from 'objection';
 
-export default {
+interface KnexEnvironments {
+  development: object,
+  test: object,
+  production: object,
+}
+
+const knexConfig: KnexEnvironments = {
   development: {
     client: 'mysql2',
     connection: {
@@ -20,6 +26,21 @@ export default {
     },
     ...knexSnakeCaseMappers,
   },
+  test: {
+    client: 'mysql2',
+    connection: {
+      host: 'localhost',
+      port: 3306,
+      user: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
+    },
+    migrations: {
+      tableName: 'knex_migrations',
+      directory: 'db/migrations',
+    },
+    ...knexSnakeCaseMappers,
+  },
   production: {
     client: 'mysql2',
     connection: process.env.DATABASE_URL,
@@ -27,3 +48,7 @@ export default {
     ...knexSnakeCaseMappers,
   },
 };
+
+export default knexConfig;
+
+export { KnexEnvironments };
