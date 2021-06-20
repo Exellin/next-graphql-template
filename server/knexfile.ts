@@ -39,6 +39,9 @@ const knexConfig: KnexEnvironments = {
       tableName: 'knex_migrations',
       directory: 'db/migrations',
     },
+    seeds: {
+      directory: 'db/seeds',
+    },
     ...knexSnakeCaseMappers,
   },
   production: {

@@ -1,13 +1,20 @@
+import faker from 'faker';
+
 import knex from '../db/knex';
 import buildFastify from '../app';
 import dbSetup from '../db/db-setup';
 import User from '../models/User';
 
 describe('createUser mutation', () => {
-  dbSetup();
+  beforeAll(() => {
+    dbSetup();
+  });
 
   afterEach(async () => {
     await knex('user').del();
+  });
+
+  afterAll(async () => {
     knex.destroy();
   });
 
@@ -23,7 +30,7 @@ describe('createUser mutation', () => {
   `;
 
   const userProperties = {
-    email: 'test@example.com',
+    email: faker.internet.email(),
     firstName: 'test',
     lastName: 'test',
   };
