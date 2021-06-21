@@ -1,4 +1,6 @@
 import { verify } from 'jsonwebtoken';
+import faker from 'faker';
+
 import User from '../models/User';
 import knex from '../db/knex';
 import dbSetup from '../db/db-setup';
@@ -39,11 +41,14 @@ describe('POST /refresh_token', () => {
     });
 
     beforeEach(async () => {
-      await knex.seed.run();
-    });
-
-    afterEach(async () => {
-      await knex('user').del();
+      await knex('user').insert([
+        {
+          firstName: 'test',
+          lastName: 'test',
+          email: faker.internet.email(),
+          password: 'password',
+        },
+      ]);
     });
 
     afterAll(() => {
