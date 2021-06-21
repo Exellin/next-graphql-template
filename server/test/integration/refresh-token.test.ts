@@ -1,11 +1,11 @@
 import { verify } from 'jsonwebtoken';
 import faker from 'faker';
 
-import User from '../models/User';
-import knex from '../db/knex';
-import dbSetup from '../db/db-setup';
-import { createRefreshToken } from '../auth';
-import buildFastify from '../app';
+import User from '../../models/User';
+import knex from '../../db/knex';
+import dbSetup from '../../db/db-setup';
+import { createRefreshToken } from '../../auth';
+import buildFastify from '../../app';
 
 describe('POST /refresh_token', () => {
   it('responds with an empty accessToken if there is no refresh token cookie', async () => {

@@ -1,9 +1,9 @@
 import faker from 'faker';
 
-import knex from '../db/knex';
-import buildFastify from '../app';
-import dbSetup from '../db/db-setup';
-import User from '../models/User';
+import knex from '../../db/knex';
+import buildFastify from '../../app';
+import dbSetup from '../../db/db-setup';
+import User from '../../models/User';
 
 describe('createUser mutation', () => {
   beforeAll(() => {

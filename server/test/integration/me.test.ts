@@ -1,4 +1,4 @@
-import buildFastify from '../app';
+import buildFastify from '../../app';
 
 describe('me query', () => {
   const query = `#graphql

@@ -1,4 +1,4 @@
-import knex from './db/knex';
+import knex from '../db/knex';
 
 module.exports = async () => {
   await knex('user').del();
