@@ -36,19 +36,19 @@ describe('POST /refresh_token', () => {
   });
 
   describe('when a valid refresh token was created for a user', () => {
+    let user: User;
+
     beforeAll(() => {
       dbSetup();
     });
 
     beforeEach(async () => {
-      await knex('user').insert([
-        {
-          firstName: 'test',
-          lastName: 'test',
-          email: faker.internet.email(),
-          password: 'password',
-        },
-      ]);
+      user = await User.query().insertAndFetch({
+        firstName: 'test',
+        lastName: 'test',
+        email: faker.internet.email(),
+        password: 'password',
+      });
     });
 
     afterAll(() => {
@@ -57,9 +57,6 @@ describe('POST /refresh_token', () => {
 
     it('responds with an empty accessToken if that user is no longer in the database', async () => {
       const app = await buildFastify();
-      const users = await User.query().limit(1);
-
-      const user = users[0];
       const refreshToken = createRefreshToken(user);
       const expectedResponse = { ok: false, accessToken: '' };
 
@@ -76,9 +73,6 @@ describe('POST /refresh_token', () => {
 
     it('responds with an empty accessToken when the token versions do not match', async () => {
       const app = await buildFastify();
-      const users = await User.query().limit(1);
-
-      const user = users[0];
       const refreshToken = createRefreshToken(user);
       const expectedResponse = { ok: false, accessToken: '' };
 
@@ -95,9 +89,6 @@ describe('POST /refresh_token', () => {
 
     it('responds with a new accessToken', async () => {
       const app = await buildFastify();
-      const users = await User.query().limit(1);
-
-      const user = users[0];
       const refreshToken = createRefreshToken(user);
 
       const response = await app.inject({

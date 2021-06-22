@@ -15,7 +15,7 @@ const createUser = async (_: unknown, { input }: MutationCreateUserArgs): Promis
     hashedPassword = await hash(password, 12);
   }
 
-  const user = await User.query().insert({
+  const user = await User.query().insertAndFetch({
     firstName,
     lastName,
     email,

@@ -9,7 +9,8 @@
     "migrate": "env $(cat .env) knex migrate:latest",
     "rollback": "env $(cat .env) knex migrate:rollback",
     "seed": "env $(cat .env) knex seed:run",
-    "test": "jest",
+    "test": "env $(cat test/test.env) jest",
+    "test:watch": "env $(cat test/test.env) jest --watch",
     "codegen": "graphql-codegen --config codegen.yml",
     "migrate-test": "env $(cat test.env) knex migrate:latest"
   },

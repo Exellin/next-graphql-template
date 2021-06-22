@@ -10,7 +10,7 @@ describe('createUser mutation', () => {
     dbSetup();
   });
 
-  afterAll(async () => {
+  afterAll(() => {
     knex.destroy();
   });
 

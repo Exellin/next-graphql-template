@@ -1,6 +1,5 @@
-import dotenv from 'dotenv';
-import path from 'path';
+import knex from '../db/knex';
 
 module.exports = async () => {
-  dotenv.config({ path: path.resolve(__dirname, 'test.env') });
+  await knex('user').del();
 };
