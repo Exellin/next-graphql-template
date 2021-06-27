@@ -1,56 +1,52 @@
-import { FC, useContext } from 'react';
-import Link from 'next/link';
-import { useLogoutMutation, useMeQuery } from '../generated/graphql';
-import TokenContext from '../TokenContext';
+import { FC } from 'react';
+
+import { useMeQuery } from '../generated/graphql';
+import { styled } from '../stitches.config';
+import AuthenticatedHeader from './AuthenticatedHeader';
+import UnauthenticatedHeader from './UnauthenticatedHeader';
+import Container from './Container';
+import ThemeToggle from './ThemeToggle';
+import NavLink from './NavLink';
+
+const StyledHeader = styled('header', {
+  backgroundColor: '$primaryBg',
+  color: '$primary',
+});
+
+const StyledNav = styled('nav', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
 
 interface Props {}
 
 const Header: FC<Props> = () => {
-  const [result] = useMeQuery();
-  const [, logout] = useLogoutMutation();
-  const { setToken } = useContext(TokenContext) as any;
+  let body: null | JSX.Element;
 
+  const [result] = useMeQuery();
   const { data, fetching } = result;
-  let body: any = null;
 
   if (fetching) {
     body = null;
   } else if (data?.me) {
-    body = (
-      <div>
-        {data.me.name}
-        <button
-          type="button"
-          onClick={() => {
-            logout();
-            setToken(null);
-          }}
-        >
-          logout
-        </button>
-      </div>
-    );
+    body = <AuthenticatedHeader data={data} />;
   } else {
-    body = (
-      <div>
-        <Link href="/register">
-          Register
-        </Link>
-        <Link href="/login">
-          Login
-        </Link>
-      </div>
-    );
+    body = <UnauthenticatedHeader />;
   }
 
   return (
-    <header>
-      <Link href="/">
-        Home
-      </Link>
-
-      {body}
-    </header>
+    <StyledHeader>
+      <Container>
+        <StyledNav>
+          <NavLink href="/">
+            Home
+          </NavLink>
+          <ThemeToggle />
+          {body}
+        </StyledNav>
+      </Container>
+    </StyledHeader>
   );
 };
 

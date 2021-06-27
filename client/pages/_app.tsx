@@ -2,11 +2,13 @@ import {
   ComponentType, FC, useEffect, useState,
 } from 'react';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
+import { ThemeProvider } from 'next-themes';
 
 import '../styles/globals.css';
 import Header from '../components/Header';
 import TokenContext from '../TokenContext';
 import UrqlProvider from '../components/UrqlProvider';
+import { darkTheme } from '../stitches.config';
 
 interface Props {
   Component: ComponentType, pageProps: any
@@ -63,13 +65,22 @@ const App: FC<Props> = ({ Component, pageProps }: Props) => {
     return <div>Loading...</div>;
   }
 
+  const currentTheme = localStorage.getItem('theme') || 'system';
+
   return (
-    <TokenContext.Provider value={state}>
-      <UrqlProvider>
-        <Header />
-        <Component {...pageProps} />
-      </UrqlProvider>
-    </TokenContext.Provider>
+    <ThemeProvider
+      disableTransitionOnChange
+      attribute="class"
+      value={{ light: 'light-theme', dark: darkTheme }}
+      defaultTheme={currentTheme}
+    >
+      <TokenContext.Provider value={state}>
+        <UrqlProvider>
+          <Header />
+          <Component {...pageProps} />
+        </UrqlProvider>
+      </TokenContext.Provider>
+    </ThemeProvider>
   );
 };
 
