@@ -3,17 +3,17 @@ import {
   Provider,
 } from 'urql';
 import {
-  useContext, FC, ReactChild,
+  FC, ReactChild,
 } from 'react';
 
-import TokenContext from '../TokenContext';
+import { useToken } from './TokenProvider';
 
 interface Props {
   children: ReactChild | ReactChild[]
 }
 
 const UrqlProvider: FC<Props> = ({ children }: Props) => {
-  const { token } = useContext(TokenContext) as any;
+  const { token } = useToken();
 
   const client = createClient({
     url: 'http://localhost:4000/graphql',

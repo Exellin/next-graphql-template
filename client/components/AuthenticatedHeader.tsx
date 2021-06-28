@@ -1,8 +1,8 @@
 import { styled } from '@stitches/react';
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 
 import { MeQuery, useLogoutMutation } from '../generated/graphql';
-import TokenContext from '../TokenContext';
+import { useToken } from './TokenProvider';
 
 interface Props {
   data: MeQuery
@@ -15,7 +15,7 @@ const StyledSpan = styled('span', {
 const AuthenticatedHeader: FC<Props> = ({ data }: Props) => {
   const { me } = data;
   const [, logout] = useLogoutMutation();
-  const { setToken } = useContext(TokenContext) as any;
+  const { setToken } = useToken();
 
   return (
     <div>
@@ -24,7 +24,7 @@ const AuthenticatedHeader: FC<Props> = ({ data }: Props) => {
         type="button"
         onClick={() => {
           logout();
-          setToken(null);
+          setToken('');
         }}
       >
         logout
