@@ -20,7 +20,7 @@ const Login: FC<Props> = () => {
       setToken(loginResult.data.login.accessToken);
       router.push('/');
     }
-  }, [loginResult]);
+  }, [loginResult, router, setToken]);
 
   return (
     <form onSubmit={(e) => {

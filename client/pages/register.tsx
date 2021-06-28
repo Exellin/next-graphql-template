@@ -17,7 +17,7 @@ const Register: FC<Props> = () => {
     if (createUserResult.data && !createUserResult.error) {
       router.push('/');
     }
-  }, [createUserResult]);
+  }, [createUserResult, router]);
 
   return (
     <form onSubmit={(e) => {

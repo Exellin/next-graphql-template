@@ -1,5 +1,5 @@
 import {
-  ComponentType, FC, useEffect, useState,
+  ComponentType, FC, useCallback, useEffect, useState,
 } from 'react';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { ThemeProvider } from 'next-themes';
@@ -20,7 +20,7 @@ const App: FC<Props> = ({ Component, pageProps }: Props) => {
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const refreshToken = () => {
+  const refreshToken = useCallback(() => {
     const scheduleNextRefresh = (accessToken: string) => {
       try {
         const { exp } = jwtDecode<JwtPayload>(accessToken);
@@ -51,11 +51,11 @@ const App: FC<Props> = ({ Component, pageProps }: Props) => {
 
       setLoading(false);
     });
-  };
+  }, []);
 
   useEffect(() => {
     refreshToken();
-  }, []);
+  }, [refreshToken]);
 
   const state = {
     token, setToken,
