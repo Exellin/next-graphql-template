@@ -5,6 +5,8 @@ import { LoginResponse, MutationLoginArgs, MutationCreateUserArgs } from 'genera
 import User from '../models/User';
 import { createAccessToken, createRefreshToken, refreshTokenExpiresInDays } from '../auth';
 
+const REFRESH_TOKEN_PATH = '/refresh_token';
+
 const createUser = async (_: unknown, { input }: MutationCreateUserArgs): Promise<User> => {
   const {
     firstName, lastName, email, password,
@@ -42,7 +44,7 @@ const login = async (_: unknown, { input }: MutationLoginArgs, ctx: Context): Pr
   ctx.reply.setCookie('jid', createRefreshToken(user),
     {
       httpOnly: true,
-      path: '/refresh_token',
+      path: REFRESH_TOKEN_PATH,
       expires: new Date(new Date().setDate(new Date().getDate() + refreshTokenExpiresInDays)),
     });
 
@@ -52,7 +54,7 @@ const login = async (_: unknown, { input }: MutationLoginArgs, ctx: Context): Pr
 };
 
 const logout = (_: unknown, _args: any, ctx: Context): boolean => {
-  ctx.reply.clearCookie('jid');
+  ctx.reply.clearCookie('jid', { path: REFRESH_TOKEN_PATH });
 
   return true;
 };
