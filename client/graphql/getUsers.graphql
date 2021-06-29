@@ -1,7 +1,5 @@
 query getUsers {
   users{
-    id
-    email
-    name
+    ...userFields
   }
 }

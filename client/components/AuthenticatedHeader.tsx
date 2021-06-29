@@ -1,25 +1,24 @@
 import { styled } from '@stitches/react';
 import { FC } from 'react';
 
-import { MeQuery, useLogoutMutation } from '../generated/graphql';
+import { UserFieldsFragment, useLogoutMutation } from '../generated/graphql';
 import { useToken } from './TokenProvider';
 
 interface Props {
-  data: MeQuery
+  currentUser: UserFieldsFragment
 }
 
 const StyledSpan = styled('span', {
   padding: '0 1rem',
 });
 
-const AuthenticatedHeader: FC<Props> = ({ data }: Props) => {
-  const { me } = data;
+const AuthenticatedHeader: FC<Props> = ({ currentUser }: Props) => {
   const [, logout] = useLogoutMutation();
   const { setToken } = useToken();
 
   return (
     <div>
-      <StyledSpan>{`Signed in as ${me!.name}`}</StyledSpan>
+      <StyledSpan>{`Signed in as ${currentUser.name}`}</StyledSpan>
       <button
         type="button"
         onClick={() => {

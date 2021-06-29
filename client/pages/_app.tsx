@@ -8,6 +8,7 @@ import Header from '../components/Header';
 import UrqlProvider from '../components/UrqlProvider';
 import { darkTheme } from '../stitches.config';
 import { TokenProvider } from '../components/TokenProvider';
+import { CurrentUserProvider } from '../components/CurrentUserProvider';
 
 interface Props {
   Component: ComponentType, pageProps: any
@@ -29,8 +30,10 @@ const App: FC<Props> = ({ Component, pageProps }: Props) => {
     >
       <TokenProvider>
         <UrqlProvider>
-          <Header />
-          <Component {...pageProps} />
+          <CurrentUserProvider>
+            <Header />
+            <Component {...pageProps} />
+          </CurrentUserProvider>
         </UrqlProvider>
       </TokenProvider>
     </ThemeProvider>

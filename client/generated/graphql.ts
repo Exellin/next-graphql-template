@@ -79,7 +79,7 @@ export type CreateUserMutation = (
   { __typename?: 'Mutation' }
   & { createUser?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'firstName' | 'lastName' | 'email'>
+    & UserFieldsFragment
   )> }
 );
 
@@ -90,7 +90,7 @@ export type GetUsersQuery = (
   { __typename?: 'Query' }
   & { users: Array<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'email' | 'name'>
+    & UserFieldsFragment
   )> }
 );
 
@@ -122,21 +122,29 @@ export type MeQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'name' | 'email'>
+    & UserFieldsFragment
   )> }
 );
 
+export type UserFieldsFragment = (
+  { __typename?: 'User' }
+  & Pick<User, 'id' | 'name' | 'email'>
+);
 
+export const UserFieldsFragmentDoc = gql`
+    fragment userFields on User {
+  id
+  name
+  email
+}
+    `;
 export const CreateUserDocument = gql`
     mutation createUser($input: CreateUserInput!) {
   createUser(input: $input) {
-    id
-    firstName
-    lastName
-    email
+    ...userFields
   }
 }
-    `;
+    ${UserFieldsFragmentDoc}`;
 
 export function useCreateUserMutation() {
   return Urql.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument);
@@ -144,12 +152,10 @@ export function useCreateUserMutation() {
 export const GetUsersDocument = gql`
     query getUsers {
   users {
-    id
-    email
-    name
+    ...userFields
   }
 }
-    `;
+    ${UserFieldsFragmentDoc}`;
 
 export function useGetUsersQuery(options: Omit<Urql.UseQueryArgs<GetUsersQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<GetUsersQuery>({ query: GetUsersDocument, ...options });
@@ -177,12 +183,10 @@ export function useLogoutMutation() {
 export const MeDocument = gql`
     query me {
   me {
-    id
-    name
-    email
+    ...userFields
   }
 }
-    `;
+    ${UserFieldsFragmentDoc}`;
 
 export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });

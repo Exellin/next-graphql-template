@@ -1,12 +1,12 @@
 import { FC } from 'react';
 
-import { useMeQuery } from '../generated/graphql';
 import { styled } from '../stitches.config';
 import AuthenticatedHeader from './AuthenticatedHeader';
 import UnauthenticatedHeader from './UnauthenticatedHeader';
 import Container from './Container';
 import ThemeToggle from './ThemeToggle';
 import NavLink from './NavLink';
+import { useCurrentUser } from './CurrentUserProvider';
 
 const StyledHeader = styled('header', {
   backgroundColor: '$primaryBg',
@@ -22,15 +22,12 @@ const StyledNav = styled('nav', {
 interface Props {}
 
 const Header: FC<Props> = () => {
-  let body: null | JSX.Element;
+  let body: JSX.Element;
 
-  const [result] = useMeQuery();
-  const { data, fetching } = result;
+  const { currentUser } = useCurrentUser();
 
-  if (fetching) {
-    body = null;
-  } else if (data?.me) {
-    body = <AuthenticatedHeader data={data} />;
+  if (currentUser) {
+    body = <AuthenticatedHeader currentUser={currentUser} />;
   } else {
     body = <UnauthenticatedHeader />;
   }

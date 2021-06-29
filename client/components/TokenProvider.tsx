@@ -54,13 +54,13 @@ const TokenProvider: FC<Props> = ({ children }: Props) => {
     refreshToken();
   }, [refreshToken]);
 
-  const value = {
-    token, setToken,
-  };
-
   if (loading) {
     return <div>Loading...</div>;
   }
+
+  const value = {
+    token, setToken,
+  };
 
   return <TokenContext.Provider value={value}>{children}</TokenContext.Provider>;
 };
