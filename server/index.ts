@@ -10,7 +10,7 @@ const main = async () => {
 
   const port = process.env.PORT || 4000;
   // eslint-disable-next-line no-console
-  app.listen(port, '0.0.0.0', () => console.log(`server started on http://localhost:${port}/playground`));
+  app.listen(port, '0.0.0.0', () => console.log(`server started on port ${port}`));
 };
 
 main();

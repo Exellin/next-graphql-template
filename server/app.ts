@@ -44,13 +44,18 @@ const buildFastify = async (opts: FastifyServerOptions = {}) => {
 
   app.register(cookie);
 
-  app.register(AltairFastify, {
-    path: '/playground',
-  });
+  if (process.env.NODE_ENV === 'development') {
+    app.register(AltairFastify, {
+      path: '/playground',
+    });
+  }
 
   app.register(fastifyCors, {
-    origin: (_origin, cb) => {
-      if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+    origin: (origin: string, cb) => {
+      const acceptedEnvironments = ['test', 'development'];
+      const acceptedDomainRegex = new RegExp(process.env.ACCEPTED_DOMAIN!);
+
+      if (acceptedDomainRegex.test(origin) || acceptedEnvironments.includes(process.env.NODE_ENV!)) {
         cb(null, true);
         return;
       }
