@@ -6,16 +6,20 @@ interface KnexEnvironments {
   production: object,
 }
 
+const localConnection = {
+  host: 'localhost',
+  port: 3306,
+  user: process.env.DATABASE_USERNAME,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
+};
+
+const connection = process.env.DATABASE_URL || localConnection;
+
 const knexConfig: KnexEnvironments = {
   development: {
     client: 'mysql2',
-    connection: {
-      host: 'localhost',
-      port: 3306,
-      user: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-    },
+    connection,
     migrations: {
       tableName: 'knex_migrations',
       directory: 'db/migrations',
@@ -28,13 +32,7 @@ const knexConfig: KnexEnvironments = {
   },
   test: {
     client: 'mysql2',
-    connection: {
-      host: 'localhost',
-      port: 3306,
-      user: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-    },
+    connection,
     migrations: {
       tableName: 'knex_migrations',
       directory: 'db/migrations',
@@ -46,7 +44,7 @@ const knexConfig: KnexEnvironments = {
   },
   production: {
     client: 'mysql2',
-    connection: process.env.DATABASE_URL,
+    connection,
     debug: false,
     ...knexSnakeCaseMappers,
   },
