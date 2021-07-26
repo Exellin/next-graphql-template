@@ -29,8 +29,6 @@ describe('login mutation', () => {
     app = await buildFastify();
 
     user = await User.query().insertAndFetch({
-      firstName: 'test',
-      lastName: 'test',
       email: faker.internet.email(),
       password: await hash(password, 12),
     });

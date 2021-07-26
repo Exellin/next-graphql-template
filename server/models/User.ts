@@ -2,17 +2,13 @@ import { Model } from 'objection';
 
 import { User as graphqlUserType } from '../generated/graphql';
 
-interface User extends Omit<graphqlUserType, 'name'> {}
+interface User extends graphqlUserType {}
 
 class User extends Model {
   static tableName = 'user';
 
   password!: string;
   refreshTokenVersion!: number;
-
-  name(): string {
-    return `${this.firstName} ${this.lastName}`;
-  }
 }
 
 export default User;

@@ -9,7 +9,7 @@ const REFRESH_TOKEN_PATH = '/refresh_token';
 
 const createUser = async (_: unknown, { input }: MutationCreateUserArgs): Promise<User> => {
   const {
-    firstName, lastName, email, password,
+    email, password,
   } = input;
   let hashedPassword;
 
@@ -18,8 +18,6 @@ const createUser = async (_: unknown, { input }: MutationCreateUserArgs): Promis
   }
 
   const user = await User.query().insertAndFetch({
-    firstName,
-    lastName,
     email,
     password: hashedPassword,
   });

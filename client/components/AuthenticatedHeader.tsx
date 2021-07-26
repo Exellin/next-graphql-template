@@ -20,7 +20,7 @@ const AuthenticatedHeader: FC<Props> = ({ currentUser }: Props) => {
 
   return (
     <div>
-      <StyledSpan>{`Signed in as ${currentUser.name}`}</StyledSpan>
+      <StyledSpan>{`Signed in as ${currentUser.email}`}</StyledSpan>
       <button
         type="button"
         name="logout"

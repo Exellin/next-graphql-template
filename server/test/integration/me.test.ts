@@ -65,8 +65,6 @@ describe('me query', () => {
 
     beforeEach(async () => {
       user = await User.query().insertAndFetch({
-        firstName: 'test',
-        lastName: 'test',
         email: faker.internet.email(),
         password: 'password',
       });

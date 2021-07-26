@@ -16,8 +16,6 @@ export type Scalars = {
 
 
 export type CreateUserInput = {
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
   email: Scalars['String'];
   password: Scalars['String'];
 };
@@ -64,10 +62,7 @@ export type QueryUserArgs = {
 export type User = {
   __typename?: 'User';
   id: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
   email: Scalars['String'];
-  name: Scalars['String'];
 };
 
 export type CreateUserMutationVariables = Exact<{
@@ -128,13 +123,12 @@ export type MeQuery = (
 
 export type UserFieldsFragment = (
   { __typename?: 'User' }
-  & Pick<User, 'id' | 'name' | 'email'>
+  & Pick<User, 'id' | 'email'>
 );
 
 export const UserFieldsFragmentDoc = gql`
     fragment userFields on User {
   id
-  name
   email
 }
     `;

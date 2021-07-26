@@ -6,8 +6,6 @@ const seed = async (knex: Knex): Promise<void> => {
 
   await knex('user').insert([
     {
-      firstName: 'test',
-      lastName: 'test',
       email: 'test@example.com',
       password: await hash('password', 12),
     },

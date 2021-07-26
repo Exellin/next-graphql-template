@@ -7,8 +7,6 @@ interface Props {}
 
 const Register: FC<Props> = () => {
   const [email, setEmail] = useState('');
-  const [firstName, setfirstName] = useState('');
-  const [lastName, setlastName] = useState('');
   const [password, setPassword] = useState('');
   const [createUserResult, createUser] = useCreateUserMutation();
   const router = useRouter();
@@ -24,14 +22,12 @@ const Register: FC<Props> = () => {
       e.preventDefault();
       createUser({
         input: {
-          email, firstName, lastName, password,
+          email, password,
         },
       });
     }}
     >
       <input value={email} type="email" placeholder="email" onChange={(e) => setEmail(e.target.value)} />
-      <input value={firstName} type="text" placeholder="first name" onChange={(e) => setfirstName(e.target.value)} />
-      <input value={lastName} type="text" placeholder="last name" onChange={(e) => setlastName(e.target.value)} />
       <input value={password} type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)} />
       <button type="submit">register</button>
     </form>

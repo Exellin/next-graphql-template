@@ -18,8 +18,6 @@ describe('createUser mutation', () => {
     mutation createUser($input: CreateUserInput!) {
       createUser(input: $input) {
         id
-        firstName
-        lastName
         email
       }
     }
@@ -27,8 +25,6 @@ describe('createUser mutation', () => {
 
   const userProperties = {
     email: faker.internet.email(),
-    firstName: 'test',
-    lastName: 'test',
   };
 
   const variables = {

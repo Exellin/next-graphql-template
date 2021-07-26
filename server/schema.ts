@@ -9,15 +9,10 @@ export default `#graphql
 
   type User {
     id: String!
-    firstName: String!
-    lastName: String!
     email: String!
-    name: String!
   }
 
   input CreateUserInput {
-    firstName: String!
-    lastName: String!
     email: String!
     password: String!
   }
