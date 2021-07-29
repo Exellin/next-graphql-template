@@ -6,7 +6,7 @@
 - Create a MySql user with credentials `DATABASE_USERNAME` and `DATABASE_PASSWORD`
 - Create a database with a `DATABASE_NAME`
 - `npm run migrate`
-- `npm seed`
+- `npm run seed`
 - `npm start`
 
 ### Client
