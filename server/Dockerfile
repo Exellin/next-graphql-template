@@ -13,9 +13,9 @@ FROM node:16 AS node-prod
 WORKDIR /usr/src/app
 
 # Setup pscale CLI
-RUN wget https://github.com/planetscale/cli/releases/download/v0.60.0/pscale_0.60.0_linux_386.tar.gz
-RUN tar -xf pscale_0.60.0_linux_386.tar.gz -C /usr/bin/
-RUN rm pscale_0.60.0_linux_386.tar.gz
+RUN wget https://github.com/planetscale/cli/releases/download/v0.60.0/pscale_0.60.0_linux_amd64.tar.gz
+RUN tar -xf pscale_0.60.0_linux_amd64.tar.gz -C /usr/bin/
+RUN rm pscale_0.60.0_linux_amd64.tar.gz
 
 # Install production dependencies
 COPY package*.json ./
