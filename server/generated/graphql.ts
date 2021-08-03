@@ -55,12 +55,12 @@ export type Query = {
 
 
 export type QueryUserArgs = {
-  id: Scalars['Int'];
+  id: Scalars['ID'];
 };
 
 export type User = {
   __typename?: 'User';
-  id: Scalars['String'];
+  id: Scalars['ID'];
   email: Scalars['String'];
 };
 
@@ -149,7 +149,7 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Query: ResolverTypeWrapper<{}>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   User: ResolverTypeWrapper<User>;
 };
 
@@ -162,7 +162,7 @@ export type ResolversParentTypes = {
   Mutation: {};
   Boolean: Scalars['Boolean'];
   Query: {};
-  Int: Scalars['Int'];
+  ID: Scalars['ID'];
   User: User;
 };
 
@@ -188,7 +188,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

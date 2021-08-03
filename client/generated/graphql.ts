@@ -56,12 +56,12 @@ export type Query = {
 
 
 export type QueryUserArgs = {
-  id: Scalars['Int'];
+  id: Scalars['ID'];
 };
 
 export type User = {
   __typename?: 'User';
-  id: Scalars['String'];
+  id: Scalars['ID'];
   email: Scalars['String'];
 };
 
