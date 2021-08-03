@@ -1,5 +1,3 @@
-import { knexSnakeCaseMappers } from 'objection';
-
 interface KnexEnvironments {
   development: object,
   test: object,
@@ -28,7 +26,6 @@ const knexConfig: KnexEnvironments = {
     seeds: {
       directory: 'db/seeds',
     },
-    ...knexSnakeCaseMappers,
   },
   test: {
     client: 'mysql2',
@@ -40,13 +37,11 @@ const knexConfig: KnexEnvironments = {
     seeds: {
       directory: 'db/seeds',
     },
-    ...knexSnakeCaseMappers,
   },
   production: {
     client: 'mysql2',
     connection,
     debug: false,
-    ...knexSnakeCaseMappers,
   },
 };
 
